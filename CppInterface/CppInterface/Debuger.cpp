@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Debuger.h"
 
 Debuger::DebugFuncPtr Debuger::FuncPtr;
@@ -15,5 +15,9 @@ void Debuger::Log(const string str)
 	if (FuncPtr != nullptr)
 	{
 		FuncPtr(str.c_str());
+	}
+	else
+	{
+		cout << "cpp : " << str.c_str() << endl;
 	}
 }
