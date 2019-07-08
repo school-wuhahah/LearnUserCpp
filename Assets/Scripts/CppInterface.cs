@@ -11,4 +11,8 @@ public class CppInterface
 
     [DllImport("CppInterface")]
     public extern static void SetDebugFunction(IntPtr ptr);
+
+    [DllImport("CppInterface")]
+    public extern static void init_register_luaState(IntPtr ptr);
+
 }

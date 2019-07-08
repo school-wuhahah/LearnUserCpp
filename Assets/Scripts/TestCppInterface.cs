@@ -34,7 +34,6 @@ public class TestCppInterface : MonoBehaviour
         DebugDelegate cb = CallBackFunction;
         IntPtr intptr_delegate = Marshal.GetFunctionPointerForDelegate(cb);
         CppInterface.SetDebugFunction(intptr_delegate);
-
     }
 
     static void CallBackFunction(IntPtr strPtr)
