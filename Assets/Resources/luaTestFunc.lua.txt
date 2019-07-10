@@ -1,3 +1,4 @@
 print("luaTestFunc bgn ...")
 testluafunc()
+print("testglobal : ", testglobal)
 print("luaTestFunc end ...")
