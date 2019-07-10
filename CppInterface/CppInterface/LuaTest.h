@@ -18,5 +18,7 @@ private:
 
 	static int testluafunc(lua_State *L);
 
+	static int lua_get_testglobal_table(lua_State *L);
+
 };
 
