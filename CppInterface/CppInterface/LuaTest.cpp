@@ -1,6 +1,10 @@
 #include "LuaTest.h"
 #include "Debuger.h"
-#include "lua-cjson-2.1.0/lua_cjson.c"
+
+extern "C"
+{
+#include "lua_cjson.c"
+}
 
 void LuaTest::init_register_luaState(lua_State *L)
 {

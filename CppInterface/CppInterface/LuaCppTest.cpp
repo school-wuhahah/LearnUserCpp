@@ -36,7 +36,7 @@ int main()
 	}
 
 	LuaTest::init_register_luaState(L);
-	luaL_dofile(L, "luaTestFunc.lua");
+	luaL_dofile(L, "luatest/luaTestFunc.lua");
 
 
 	//luaopen_base(L); //
