@@ -15,6 +15,7 @@ public class TestCppInterface : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CppInterface.Instance.Init();
         RegisterDebugCallback();
         StartCoroutine(UpdateNum());
     }
@@ -24,7 +25,7 @@ public class TestCppInterface : MonoBehaviour
         while(true)
         {
             showMsg.text = num.ToString();
-            num = CppInterface.Add(num, 1);
+            num = CppInterface.Instance.Add(num, 1);
             yield return new WaitForSeconds(1.0f);
         }
     }
@@ -33,11 +34,18 @@ public class TestCppInterface : MonoBehaviour
     {
         DebugDelegate cb = CallBackFunction;
         IntPtr intptr_delegate = Marshal.GetFunctionPointerForDelegate(cb);
-        CppInterface.SetDebugFunction(intptr_delegate);
+        CppInterface.Instance.SetDebugFunction(intptr_delegate);
     }
 
     static void CallBackFunction(IntPtr strPtr)
     {
         Debug.Log("CppLog: " + Marshal.PtrToStringAnsi(strPtr));
     }
+
+    private void OnApplicationQuit()
+    {
+        CppInterface.Instance.Close();
+    }
+
+
 }
