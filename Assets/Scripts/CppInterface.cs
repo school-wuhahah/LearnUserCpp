@@ -1,24 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
-using System.IO;
 
-public class CppInterface 
+public class CppInterface
 {
-    private const string libpath = "Plugins/x86_64/CppInterface.dll";
-
-    private IntPtr libPtr = IntPtr.Zero;
-
-    private delegate int AddDelegate(int a, int b);
-    private AddDelegate addDelegate;
-    private delegate void PtrDelegate(IntPtr intPtr);
-    private PtrDelegate setDebugFuncDelegate;
-    private PtrDelegate initLuaState;
-
     private static CppInterface _instance;
-    public static CppInterface Instance {
+
+    public static CppInterface Instance
+    {
         get
         {
             if (null == _instance)
@@ -31,33 +21,48 @@ public class CppInterface
 
     public void Init()
     {
-        string path = Path.Combine(Application.dataPath, libpath);
-        libPtr = CppLibManager.OpenLibrary(path);
-        //---
-        addDelegate = CppLibManager.GetDelegate<AddDelegate>(libPtr, "Add");
-        setDebugFuncDelegate = CppLibManager.GetDelegate<PtrDelegate>(libPtr, "SetDebugFunction");
-        initLuaState = CppLibManager.GetDelegate<PtrDelegate>(libPtr, "init_register_luaState");
+
+#if UNITY_ANDROID || UNITY_IPHONE
+        CppInterfacePlat.Instance.Init();
+#elif UNITY_EDITOR
+        CppInterfaceEditor.Instance.Init();
+#endif
     }
 
     public void Close()
     {
-        CppLibManager.CloseLibrary(libPtr);
+#if UNITY_ANDROID || UNITY_IPHONE
+        CppInterfacePlat.Instance.Close();
+#elif UNITY_EDITOR
+        CppInterfaceEditor.Instance.Close();
+#endif
     }
-
 
     public int Add(int a, int b)
     {
-        return addDelegate(a, b);
+#if UNITY_ANDROID || UNITY_IPHONE
+        return CppInterfacePlat.Add(a, b);
+#elif UNITY_EDITOR
+        return CppInterfaceEditor.Instance.Add(a, b);
+#endif
     }
 
-    public void SetDebugFunction(IntPtr ptr)
+    public void SetDebugFunction(IntPtr intPtr)
     {
-        setDebugFuncDelegate(ptr);
+#if UNITY_ANDROID || UNITY_IPHONE
+        CppInterfacePlat.SetDebugFunction(intPtr);
+#elif UNITY_EDITOR
+        CppInterfaceEditor.Instance.SetDebugFunction(intPtr);
+#endif
     }
 
-    public void init_register_luaState(IntPtr ptr)
+    public void init_register_luaState(IntPtr intPtr)
     {
-        initLuaState(ptr);
+#if UNITY_ANDROID || UNITY_IPHONE
+        CppInterfacePlat.init_register_luaState(intPtr);
+#elif UNITY_EDITOR
+        CppInterfaceEditor.Instance.init_register_luaState(intPtr);
+#endif
     }
 
 }

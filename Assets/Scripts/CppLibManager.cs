@@ -38,27 +38,37 @@ public class CppLibManager : MonoBehaviour
 
     public static IntPtr OpenLibrary(string path)
     {
+#if UNITY_EDITOR
         IntPtr handle = LoadLib(path, 0);
         if (handle == IntPtr.Zero)
         {
             throw new Exception("Couldn't open native library: " + path);
         }
         return handle;
+#else
+        return IntPtr.Zero;
+#endif
     }
 
     public static void CloseLibrary(IntPtr libHandle)
     {
+#if UNITY_EDITOR
         FreeLib(libHandle);
+#endif
     }
 
     public static T GetDelegate<T>(IntPtr libHandle, string funcName) where T : class
     {
+#if UNITY_EDITOR
         IntPtr symbol = GetProcAddr(libHandle, funcName);
         if (symbol == IntPtr.Zero)
         {
             throw new Exception("Couldn't get function: " + funcName);
         }
         return Marshal.GetDelegateForFunctionPointer<T>(symbol);
+#else
+        return null;
+#endif
     }
 
 }

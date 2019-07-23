@@ -16,7 +16,7 @@ public class TestCppInterface : MonoBehaviour
     void Start()
     {
         CppInterface.Instance.Init();
-        RegisterDebugCallback();
+        //RegisterDebugCallback();
         StartCoroutine(UpdateNum());
     }
 
