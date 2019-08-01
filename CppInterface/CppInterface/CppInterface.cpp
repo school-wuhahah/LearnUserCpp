@@ -25,6 +25,13 @@ extern "C"
 	{
 		LuaTest::init_register_luaState(L);
 	}
+
+	void testManagerfunc(testManagerStruct *tm)
+	{
+		Debuger::Log("testManagerfunc bgn ...");
+		tm->logptr();
+		Debuger::Log("testManagerfunc end ...");
+	}
 }
 
 

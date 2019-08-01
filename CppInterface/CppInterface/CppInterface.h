@@ -10,4 +10,6 @@ extern "C"
 
 	__declspec(dllexport) void init_register_luaState(lua_State *L);
 
+	__declspec(dllexport) void testManagerfunc(testManagerStruct *tm);
+
 }

@@ -22,3 +22,10 @@ private:
 
 };
 
+struct testManagerStruct
+{
+public:
+	typedef void(*logPtr)();
+	logPtr logptr;
+};
+
