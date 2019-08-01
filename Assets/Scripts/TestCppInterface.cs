@@ -16,8 +16,12 @@ public class TestCppInterface : MonoBehaviour
     void Start()
     {
         CppInterface.Instance.Init();
-        //RegisterDebugCallback();
+        RegisterDebugCallback();
         StartCoroutine(UpdateNum());
+
+        TestMangerStructs testMangerStructs = new TestMangerStructs();
+        testMangerStructs.TestMethodPtr = Marshal.GetFunctionPointerForDelegate(TestManager.Instance.GetTestMethodDG());
+        CppInterface.Instance.testManagerfunc(ref testMangerStructs);
     }
 
     IEnumerator UpdateNum()
@@ -46,6 +50,5 @@ public class TestCppInterface : MonoBehaviour
     {
         CppInterface.Instance.Close();
     }
-
 
 }

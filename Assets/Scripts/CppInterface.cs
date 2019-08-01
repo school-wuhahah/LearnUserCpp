@@ -65,4 +65,12 @@ public class CppInterface
 #endif
     }
 
+    public void testManagerfunc(ref TestMangerStructs structs)
+    {
+#if UNITY_ANDROID || UNITY_IPHONE
+#elif UNITY_EDITOR
+        CppInterfaceEditor.Instance.testManagerfunc(ref structs);
+#endif
+    }
+
 }

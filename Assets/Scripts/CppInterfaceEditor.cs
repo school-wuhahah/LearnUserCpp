@@ -16,9 +16,12 @@ public class CppInterfaceEditor
     private delegate void PtrDelegate(IntPtr intPtr);
     private PtrDelegate setDebugFuncDelegate;
     private PtrDelegate initLuaState;
+    private delegate void TestMagerDelegate(ref TestMangerStructs tstruct);
+    private TestMagerDelegate testMagerStruct;
 
     private static CppInterfaceEditor _instance;
-    public static CppInterfaceEditor Instance {
+    public static CppInterfaceEditor Instance
+    {
         get
         {
             if (null == _instance)
@@ -38,6 +41,7 @@ public class CppInterfaceEditor
         addDelegate = CppLibManager.GetDelegate<AddDelegate>(libPtr, "Add");
         setDebugFuncDelegate = CppLibManager.GetDelegate<PtrDelegate>(libPtr, "SetDebugFunction");
         initLuaState = CppLibManager.GetDelegate<PtrDelegate>(libPtr, "init_register_luaState");
+        testMagerStruct = CppLibManager.GetDelegate<TestMagerDelegate>(libPtr, "testManagerfunc");
 #endif
     }
 
@@ -62,6 +66,11 @@ public class CppInterfaceEditor
     public void init_register_luaState(IntPtr ptr)
     {
         initLuaState(ptr);
+    }
+
+    public void testManagerfunc(ref TestMangerStructs tstructs)
+    {
+        testMagerStruct(ref tstructs);
     }
 
 }
